@@ -13,32 +13,15 @@ The pre-processed data is fed into the CVAE to perform 3D reconstruction. We hav
 
 The CVAE implements 3D Convolutions (3DConvs) and is a modification to the one used by [Xing (2018)](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf). 
 
-## Installation Requirements
-
-1) It is recommended to [install Anaconda](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart) and create an environment in your system.
-
-2) Install the following dependencies in your anaconda environment
-
-	* NumPy (>= 1.19.2)
-	* Matplotlib (>= 3.3.2)
-	* PyTorch (>= 1.7.0)
-	* scikit-learn (>= 0.23.2)
-	* tqdm
-	* tensorboardX
-	* torchsummary
-	* PIL
-	* collections
-
-## Data
+## 3D CFD Data Description
 
 The plot below is an example of a processed cube sample. We model the 3 dimensions of the cube using voxels. Each cube has dimensions of ```21x21x21```. Also, each cube contains phyiscal information along its three velocity components. We feed these three components to a 3DConv simultaneously (similar to RGB images). 
 
 Our dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
 
-For further questions about the data and data pre-processing, contact Christian Gscheidle (christian.gscheidle@scai.fraunhofer.de).
+<!--For further questions about the data and data pre-processing, contact Christian Gscheidle (christian.gscheidle@scai.fraunhofer.de).-->
 
 ![plot](./images/cube_sample/3d_turbulence_cube_channels.png)
-
 
 ## Data Pre-processing
 
@@ -128,7 +111,7 @@ class CFD3DDataset(Dataset):
         return single_cube_tensor
 ```
 
-## Model
+## 3D CVAE Model
 
 The figure below shows the architecture that we have implemented for the CVAE. The diagram shows 2DConvs but the same architecture holds for 3DConvs. The CVAE is composed by an encoder network (upper part), this is the downsampling of the data. Thereafter is the variational layer (mu, sigma) and finally a decoder network (bottom part), where the upsampling of data in order to get the original shape happens. The loss functions of this model are Mean Squared Error (MSE) for reconstructions and Kullback-Leibler Divergence (KLB) for regularization of latent space.
 
@@ -175,6 +158,22 @@ self.decoder = nn.Sequential(
             nn.ConvTranspose3d(in_channels=16, out_channels=image_channels, kernel_size=4, stride=1, padding=0), # dimensions should be as original
             nn.BatchNorm3d(num_features=3))        
 ```
+
+## Setting up the environment
+
+1) It is recommended to [install Anaconda](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart) and create an environment in your system.
+
+2) Install the following dependencies in your anaconda environment
+
+	* NumPy (>= 1.19.2)
+	* Matplotlib (>= 3.3.2)
+	* PyTorch (>= 1.7.0)
+	* scikit-learn (>= 0.23.2)
+	* tqdm
+	* tensorboardX
+	* torchsummary
+	* PIL
+	* collections
 
 ## Train Model
 
