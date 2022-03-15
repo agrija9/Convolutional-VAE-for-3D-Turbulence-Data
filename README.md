@@ -13,11 +13,17 @@ The pre-processed data is fed into the CVAE to perform 3D reconstruction. We hav
 
 The CVAE implements 3D Convolutions (3DConvs) and is a modification to the one used by [Xing (2018)](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf). 
 
-## 3D CFD Data Description
+## Data Description
 
-The plot below is an example of a processed cube sample. We model the 3 dimensions of the cube using voxels. Each cube has dimensions of ```21x21x21```. Also, each cube contains phyiscal information along its three velocity components. We feed these three components to a 3DConv simultaneously (similar to RGB images). 
+This dataset is composed of extracted cubes from a Heating-Ventilation-and-Air-Conditioning (HVAC) duct CFD simulation. 
 
-Our dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
+Each cube represents a three dimensional temporal snapshot of the turbulent flow carrying physical information at a particular time. The information extracted from the simulation is based on flow variable (velocity U , static pressure p), the vector component (x, y, z) for U , the scalar component for p as well as the orientation of the flow based on the normal direction of the slice.
+
+Each cube carries phyisical information along a velocity and a pressure component, such components are treated as channels that are then fed into a 3DConv simultaneously with Pytorch. 
+
+We use voxels to represent our 3D cubes as arrays of dimensions `21 × 21 × 21 x 2000 (x_coord, y_coord, z_coord, timestep)`. The plot below is an example of a cube data sample, visualize an individual cube sample in the form of a heatmap using matplotlib.
+
+In total, our dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
 
 <!--For further questions about the data and data pre-processing, contact Christian Gscheidle (christian.gscheidle@scai.fraunhofer.de).-->
 
@@ -111,7 +117,7 @@ class CFD3DDataset(Dataset):
         return single_cube_tensor
 ```
 
-## 3D CVAE Model
+## Model Architecture
 
 The figure below shows the architecture that we have implemented for the CVAE. The diagram shows 2DConvs but the same architecture holds for 3DConvs. The CVAE is composed by an encoder network (upper part), this is the downsampling of the data. Thereafter is the variational layer (mu, sigma) and finally a decoder network (bottom part), where the upsampling of data in order to get the original shape happens. The loss functions of this model are Mean Squared Error (MSE) for reconstructions and Kullback-Leibler Divergence (KLB) for regularization of latent space.
 
@@ -191,7 +197,7 @@ The following are some hyperparameters that can be modified to train the model
 * ```--epochs``` number of training epochs
 * ```--z_dim``` latent space dimension
 
-## Train Model in Cluster (Leo)
+## Training
 
 In order to train this model in the cluster, transfer the code, data and also the following bash script (```run_CVAE.sh```)
 
@@ -263,7 +269,7 @@ The figure below depicts the reconstruction improvement of a sample cube as a fu
 
 Once the model is trained, the simplest way to test generation is to initialize a random cube array and feed through the decoder. With this one can inspect qualitatively the generation of CFD cubes. As future work, more sophisticated random cube initialization has to be explored together with approapriate generation quality metrics.
 
-## Lessons Learned
+## Conclusions
 
 * For reconstruction loss, Mean Squared Error (MSE) has proven to be better than Binary-Cross-Entropy (BCE) (see ```loss.py```)
 * In order to equalize the orders of magnitues between MSE and Kulback-Leibler Divergence (KLD), we have multiplied the MSE by a factor of 0.1 (see ```loss.py```)
