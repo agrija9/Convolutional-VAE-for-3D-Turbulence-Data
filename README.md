@@ -15,17 +15,15 @@ The CVAE implements 3D Convolutions (3DConvs) and is a modification to the one u
 
 ## Data Description
 
-This dataset is composed of extracted cubes from a Heating-Ventilation-and-Air-Conditioning (HVAC) duct CFD simulation. 
+This dataset was generated with CFD simulation methods, it contains extracted cubes from a Heating-Ventilation-and-Air-Conditioning (HVAC) duct. 
 
-Each cube represents a three dimensional temporal snapshot of the turbulent flow carrying physical information at a particular time. The information extracted from the simulation is based on flow variable (velocity U , static pressure p), the vector component (x, y, z) for U , the scalar component for p as well as the orientation of the flow based on the normal direction of the slice.
+Each cube represents a three dimensional temporal snapshot of the turbulent flow carrying physical information at a particular time. The information extracted from the simulation is based on two flow variables: velocity *U* and static pressure *p*. The *U* vector (*x*, *y*, *z*), and the scalar *p* components are based on the the orientation of the flow (normal direction of the cube).
 
-Each cube carries phyisical information along a velocity and a pressure component, such components are treated as channels that are then fed into a 3DConv simultaneously with Pytorch. 
+We feed the information of two velocity components *U_x*, *U_y* and *p* as channels into a 3D Convolution using Pyotch.
 
-We use voxels to represent our 3D cubes as arrays of dimensions `21 × 21 × 21 x 2000 (x_coord, y_coord, z_coord, timestep)`. The plot below is an example of a cube data sample, visualize an individual cube sample in the form of a heatmap using matplotlib.
+We use voxels to represent our 3D cubes as arrays of dimensions `21 × 21 × 21 x 2000 (x_coord, y_coord, z_coord, timestep)`. The plot below is an example of a cube data sample, we visualize each component intensity using heatmaps.
 
 In total, our dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
-
-<!--For further questions about the data and data pre-processing, contact Christian Gscheidle (christian.gscheidle@scai.fraunhofer.de).-->
 
 ![plot](./images/cube_sample/3d_turbulence_cube_channels.png)
 
