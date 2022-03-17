@@ -17,15 +17,15 @@ We have obtained substantial improvement on 3D reconstruction by fine-tunning hy
 
 This dataset was generated with CFD simulation methods, it contains extracted cubes from a Heating-Ventilation-and-Air-Conditioning (HVAC) duct. 
 
-Each cube represents a three dimensional temporal snapshot of the turbulent flow carrying physical information at a particular time. The information extracted from the simulation is based on two flow variables: velocity *U* and static pressure *p*. The *U* vector (*x*, *y*, *z*), and the scalar *p* components are based on the the orientation of the flow (normal direction of the cube).
+Each cube represents a three dimensional temporal snapshot of the turbulent flow carrying physical information at a particular time. The information extracted from the simulation is based on two flow components: a velocity field *U* and static pressure *p*. The *U* field (*x*, *y*, *z*), and the scalar *p* are based on the the orientation of the flow (normal direction to the cube).
 
-We feed the information of two velocity components *U_x*, *U_y* and *p* as channels into a 3D Convolution using Pyotch.
+We use voxels to represent the 3D cubes as arrays of dimensions `21 × 21 × 21 x 2000 (x_coord, y_coord, z_coord, timestep)`. The plot below shows one cube data sample, we visualize each velocity component using heatmaps.
 
-We use voxels to represent our 3D cubes as arrays of dimensions `21 × 21 × 21 x 2000 (x_coord, y_coord, z_coord, timestep)`. The plot below is an example of a cube data sample, we visualize each component intensity using heatmaps.
+<!--We feed the information of two velocity components *U_x*, *U_y* and *p* as channels into a 3D Convolution using Pyotch.-->
 
 In total, our dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
 
-![plot](./images/cube_sample/3d_turbulence_cube_channels.png)
+![plot](./images/cube_sample/3d_turbulence_cube_channels.png){width=50%}
 
 ## Data Pre-processing
 
