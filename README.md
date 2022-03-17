@@ -19,11 +19,11 @@ This dataset was generated with CFD simulation methods, it contains extracted cu
 
 Each cube represents a three dimensional temporal snapshot of the turbulent flow carrying physical information at a particular time. The information extracted from the simulation is based on two flow components: a velocity field *U* and static pressure *p*. The *U* field (*x*, *y*, *z*), and the scalar *p* are based on the the orientation of the flow (normal direction to the cube).
 
-We use voxels to represent the 3D cubes as arrays of dimensions `21 × 21 × 21 x 2000 (x_coord, y_coord, z_coord, timestep)`. The plot below shows one cube data sample, we visualize each velocity component using heatmaps.
+We use voxels to represent the 3D cubes as arrays of dimensions `21 × 21 × 21 x 100 (x_coord, y_coord, z_coord, timestep)`. The plot below shows one cube data sample, we visualize each velocity component using heatmaps.
 
 <!--We feed the information of two velocity components *U_x*, *U_y* and *p* as channels into a 3D Convolution using Pyotch.-->
 
-In total, the dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
+In total, the dataset consists of 96 simulations each with 100 time steps, this totals 9600 cubes (for each velocity component).
 
 ![plot](./images/cube_sample/3d_turbulence_cube_channels.png)
 
@@ -96,11 +96,9 @@ class CFD3DDataset(Dataset):
 
         print()
         print("[INFO] finished instantiating 3D CFD pytorch dataset")
-
         .
         .
         .
-
     def __getitem__(self, index):
         """
         Returns a tensor cube of shape (3,21,21,21) normalized by
