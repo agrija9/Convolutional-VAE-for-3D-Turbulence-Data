@@ -3,15 +3,15 @@ A Convolutional Variational Autoencoder (CVAE) for 3D CFD data processing and re
 
 ## Project Summary
 
-In this project we implement a Convolutional [Variational Autoencoder](https://arxiv.org/abs/1312.6114) (CVAE) to process and reconstruct 3D turbulence data. 
+In this project we implement a Convolutional Variational Autoencoder (CVAE) [1] to process and reconstruct 3D turbulence data. 
 
-We have generated 3D turbulence cubes using Computational Fluid Dynamics (CFD) methods where each one of the cubes carries physical information along three velocity components (threated as separate channels in analogy to image data). 
+We have generated 3D turbulence cubes using Computational Fluid Dynamics (CFD) methods, each 3D cube carries physical information along three velocity components (threated as separate channels in analogy to image data). 
 
-As part of 3D CFD data pre-processing, we have written a custom pytorch dataloader that performs normalization and batching operations on the dataset. 
+As part of 3D CFD data pre-processing, we have written a **custom pytorch dataloader** that performs normalization and batching operations on the dataset. 
 
-The pre-processed data is fed into the CVAE to perform 3D reconstruction. We have obtained substantial improvement on 3D reconstruction by fine-tunning hyperparameters and manipulating our model architecture. 
+The CVAE implements 3D Convolutions (3DConvs) on the pre-processed data to perform 3D reconstruction and generation.
 
-The CVAE implements 3D Convolutions (3DConvs) and is a modification to the one used by [Xing (2018)](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf). 
+We have obtained substantial improvement on 3D reconstruction by fine-tunning hyperparameters and manipulating our model architecture. 
 
 ## Data Description
 
@@ -290,5 +290,5 @@ For further reading, refer to this report that I wrote ([Generative Models for t
 
 ## References
 
-* [Diederik P Kingma, Max Welling. Auto-Encoding Variational Bayes. December 2013](https://arxiv.org/abs/1312.6114)
-* [Victor Xing. Exploration of the ability of Deep Learning tolearn the characteristics of turbulent flows. November 2018.](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf)
+* [1] [Diederik P Kingma, Max Welling. Auto-Encoding Variational Bayes. December 2013](https://arxiv.org/abs/1312.6114)
+* [2] [Victor Xing. Exploration of the ability of Deep Learning tolearn the characteristics of turbulent flows. November 2018.](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf)
