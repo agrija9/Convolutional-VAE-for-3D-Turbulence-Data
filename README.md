@@ -25,7 +25,7 @@ We use voxels to represent the 3D cubes as arrays of dimensions `21 × 21 × 21 
 
 In total, the dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
 
-![plot](./images/cube_sample/3d_turbulence_cube_channels.png){height=50%}
+![](./images/cube_sample/3d_turbulence_cube_channels.png){height=50%}
 
 ## Data Pre-processing
 
