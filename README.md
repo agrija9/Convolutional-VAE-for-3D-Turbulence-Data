@@ -23,13 +23,13 @@ We use voxels to represent the 3D cubes as arrays of dimensions `21 × 21 × 21 
 
 <!--We feed the information of two velocity components *U_x*, *U_y* and *p* as channels into a 3D Convolution using Pyotch.-->
 
-In total, our dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
+In total, the dataset consists of a flow simulation with 100 time steps, this totals 9600 cubes (for each velocity component).
 
-![plot](./images/cube_sample/3d_turbulence_cube_channels.png){width=50%}
+![plot](./images/cube_sample/3d_turbulence_cube_channels.png){height=50%}
 
 ## Data Pre-processing
 
-The script below shows the custom pytorch dataloader we wrote to pre-process our 3d data. The most important things that are done here are 1) loading and concatenation of cube velocity channels, 2) standarization and 3) scaling of data. See ```dataloader.py``` for the full implementation.
+The script below shows the custom pytorch dataloader we wrote to pre-process the 3D data. The most important things that are done here are 1) loading and concatenation of cube velocity channels, 2) standarization and 3) scaling of data. See ```dataloader.py``` for the full implementation.
 
 ```python
 class CFD3DDataset(Dataset):
