@@ -29,7 +29,15 @@ In total, the dataset consists of a flow simulation with 100 time steps, this to
 
 ## Data Pre-processing
 
-The script below shows the custom pytorch dataloader we wrote to pre-process the 3D data. The most important things that are done here are 1) loading and concatenation of cube velocity channels, 2) standarization and 3) scaling of data. See ```dataloader.py``` for the full implementation.
+The script below shows the custom pytorch dataloader written to preprocess 3D data. Here are some highlights:
+
+<ol>
+  <li>loading and concatenation of cube velocity channels</li>
+  <li>data standarization</li>
+  <li>data scaling</li>
+</ol> 
+
+See ```dataloader.py``` for the full implementation.
 
 ```python
 class CFD3DDataset(Dataset):
