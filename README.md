@@ -1,5 +1,6 @@
 # 3D-CFD-Processing-CVAE
-A Convolutional Variational Autoencoder (CVAE) for 3D CFD data processing and reconstruction.
+
+A Convolutional Variational Autoencoder (CVAE) for 3D CFD data reconstruction and generation.
 
 ## Project Summary
 
@@ -123,9 +124,7 @@ class CFD3DDataset(Dataset):
 
 ## Model Architecture
 
-The figure below shows the architecture that we have implemented for the CVAE. The diagram shows 2DConvs but the same architecture holds for 3DConvs. The CVAE is composed by an encoder network (upper part), this is the downsampling of the data. Thereafter is the variational layer (mu, sigma) and finally a decoder network (bottom part), where the upsampling of data in order to get the original shape happens. The loss functions of this model are Mean Squared Error (MSE) for reconstructions and Kullback-Leibler Divergence (KLB) for regularization of latent space.
-
-Given the 3DConvs, the number of learning parameters increases exponentially in contrast to the 2DConvs, due to this reason, the training is considerably slower.
+The diagram below shows a Convolutional Variational Architecture. In this case, 2DConvs are displayed for clarity, but the same architecture holds for 3DConvs. The CVAE is composed by an **encoder network** (upper part) followed by a **variational layer** (*mu* and *sigma*) and a **decoder network** (bottom part). The encoder performs downsampling operations on input cubes and the decoder upsamples them in order to regain the original shape. The variational layer attempts to learn the distribution of the dataset, this one can later be used for generation. The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space (which is modeled by the variational layer).
 
 ![plot](./images/model_architecture/CVAE_2D.png)
 
@@ -169,6 +168,10 @@ self.decoder = nn.Sequential(
             nn.BatchNorm3d(num_features=3))        
 ```
 
+## Data Modeling
+
+...
+
 ## Setting up the environment
 
 1) It is recommended to [install Anaconda](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart) and create an environment in your system.
@@ -185,7 +188,10 @@ self.decoder = nn.Sequential(
 	* PIL
 	* collections
 
-## Train Model
+## Model Training
+
+Given the 3DConvs, the number of learning parameters increases exponentially in contrast to the 2DConvs, due to this reason, the training is considerably slower.
+
 
 The ```main.py``` script calls the CVAE model and trains it on the 3D CFD data. It takes about 2 hours to train for 100 epochs using an NVIDIA Tesla V100 GPU. 
 
