@@ -128,6 +128,12 @@ The diagram below shows a Convolutional Variational Architecture. In this case, 
 
 ![plot](./images/model_architecture/CVAE_2D.png)
 
+We have taken as a baseline architecture the one proposed in [2]. The encoder and decoder of the CVAE have 4 symmetrical convolutional hidden layers. Each layer of the encoder has twice the number of convolutional filters as its predecesor, this is in order to learn more complex flow features. Encoder/decoder are composed of 32, 64, 128 and 256 filters. The dense layer at the end of the encoder is used commonly to combine all the feature maps from the last hidden layer. After that, there is a variational layer that similar to VRAEs, computes the parameters of the posterior distribution and from here we compute latent vectors
+using the re-parametrization trick, in this case it is 8 × 8 latent images. The decoder takes the latent vectors and performs the same number of operations using transposed convolutions in an upsampling
+manner in order to recover (reconstruct) into the original dimensions. The initial hyper-parameters of the
+network were taken from the work by [3] and [3] After this, a fine-tunning of the hyperparameters is done according to our train and validation losses.
+
+
 ```python
 self.encoder = nn.Sequential(
             nn.Conv3d(in_channels=image_channels, out_channels=16, kernel_size=4, stride=1, padding=0),
@@ -167,10 +173,6 @@ self.decoder = nn.Sequential(
             nn.ConvTranspose3d(in_channels=16, out_channels=image_channels, kernel_size=4, stride=1, padding=0), # dimensions should be as original
             nn.BatchNorm3d(num_features=3))        
 ```
-
-## Data Modeling
-
-...
 
 ## Setting up the environment
 
@@ -304,3 +306,4 @@ For further reading, refer to this report that I wrote ([Generative Models for t
 
 * [1] [Diederik P Kingma, Max Welling. Auto-Encoding Variational Bayes. December 2013](https://arxiv.org/abs/1312.6114)
 * [2] [Victor Xing. Exploration of the ability of Deep Learning tolearn the characteristics of turbulent flows. November 2018.](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf)
+* [3] [Irina Higgins, et. al. Learning basic visual concepts with a constrained variational framework. International Conference on Learning Representations (ICLR), 2017.](https://openreview.net/forum?id=Sy2fzU9gl)
