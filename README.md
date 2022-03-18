@@ -124,14 +124,15 @@ class CFD3DDataset(Dataset):
 
 ## Model Architecture
 
-The diagram below shows a Convolutional Variational Architecture. In this case, 2DConvs are displayed for clarity, but the same architecture holds for 3DConvs. The CVAE is composed by an **encoder network** (upper part) followed by a **variational layer** (*mu* and *sigma*) and a **decoder network** (bottom part). The encoder performs downsampling operations on input cubes and the decoder upsamples them in order to regain the original shape. The variational layer attempts to learn the distribution of the dataset, this one can later be used for generation. The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space (which is modeled by the variational layer).
+The diagram below shows a Convolutional Variational Architecture. In this case, 2DConvs are displayed for clarity, but the same architecture holds for 3DConvs. The CVAE is composed by an **encoder network** (upper part) followed by a **variational layer** (*mu* and *sigma*) and a **decoder network** (bottom part). The encoder performs downsampling operations on input cubes and the decoder upsamples them in order to regain the original shape. The variational layer attempts to learn the distribution of the dataset, this one can later be used for generation. 
 
 ![plot](./images/model_architecture/CVAE_2D.png)
 
-We have taken as a baseline architecture the one proposed in [2]. The encoder and decoder of the CVAE have 4 symmetrical convolutional hidden layers. Each layer of the encoder has twice the number of convolutional filters as its predecesor, this is in order to learn more complex flow features. Encoder/decoder are composed of 32, 64, 128 and 256 filters. The dense layer at the end of the encoder is used commonly to combine all the feature maps from the last hidden layer. After that, there is a variational layer that similar to VRAEs, computes the parameters of the posterior distribution and from here we compute latent vectors
-using the re-parametrization trick, in this case it is 8 × 8 latent images. The decoder takes the latent vectors and performs the same number of operations using transposed convolutions in an upsampling
-manner in order to recover (reconstruct) into the original dimensions. The initial hyper-parameters of the
-network were taken from the work by [3] and [3] After this, a fine-tunning of the hyperparameters is done according to our train and validation losses.
+We have taken as a baseline architecture the one proposed in [2] and the hyper-parameters from [3]. The encoder and decoder of the CVAE have 4 symmetrical convolutional hidden layers. Each layer of the encoder has twice the number of convolutional filters as its predecesor, this is in order to learn more complex flow features. Encoder/decoder are composed of 32, 64, 128 and 256 convolutional filters. The dense layer at the end of the encoder is used commonly to combine all the feature maps from the last hidden layer. After that, there is a variational layer that similar to VRAEs, computes the parameters of the posterior distribution and from here we compute latent vectors
+using the re-parametrization trick, in this case it is `8 × 8 x 8` latent cubes. The decoder takes the latent vectors and performs the same number of operations using transposed convolutions in an upsampling
+manner in order to recover (reconstruct) into the original dimensions. The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space (which is modeled by the variational layer).
+
+The script below shows an example in pytorch where an encoder and a decoder are defined using 3D convolutional layers.
 
 
 ```python
