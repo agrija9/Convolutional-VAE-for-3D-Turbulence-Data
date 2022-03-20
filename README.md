@@ -310,7 +310,9 @@ For this example, we show reconstructions from 0 to 355 epochs with intervals of
 
 ## 3D Generation Results
 
-Once the model is trained, the simplest way to test generation is to initialize a random cube array and feed through the decoder. With this one can inspect qualitatively the generation of CFD cubes. As future work, more sophisticated random cube initialization has to be explored together with approapriate generation quality metrics.
+Once the model is trained, a straightforward generation approach is to initialize a random cube array of specific latent dimensions (e.g. ```8x8x8```) and pass it through the decoder network. 
+
+Qualitatively, one can inspect the generation of CFD cubes by evaluating the velocity fields for each component. As future work, more sophisticated random cube initialization has to be explored together with approapriate generation quality metrics.
 
 ## Conclusions
 
