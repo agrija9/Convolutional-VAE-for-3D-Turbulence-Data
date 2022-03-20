@@ -188,9 +188,11 @@ self.decoder = nn.Sequential(
 
 ## Setting up the environment
 
-1) It is recommended to [install Anaconda](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart) and create an environment in your system.
+1) It is recommended to use a virtual environment to run this project:
+    * You can [install Anaconda](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart) and create an environment in your system
+    * You can use pip venv
 
-2) Install the following dependencies in your anaconda environment
+2) Install the following dependencies in your pip/conda environment:
 
 	* NumPy (>= 1.19.2)
 	* Matplotlib (>= 3.3.2)
