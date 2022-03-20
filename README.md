@@ -124,13 +124,24 @@ class CFD3DDataset(Dataset):
 
 ## Model Architecture
 
-The diagram below shows a Convolutional Variational Architecture. In this case, 2DConvs are displayed for clarity, but the same architecture holds for 3DConvs. The CVAE is composed by an **encoder network** (upper part) followed by a **variational layer** (*mu* and *sigma*) and a **decoder network** (bottom part). The encoder performs downsampling operations on input cubes and the decoder upsamples them in order to regain the original shape. The variational layer attempts to learn the distribution of the dataset, this one can later be used for generation. 
+The diagram below shows the implemented CVAE architecture. In this case, 2DConvs are displayed for clarity, but the implemented architecture uses 3DConvs. 
+
+The CVAE is composed by an **encoder network** (upper part) followed by a **variational layer** (*mu* and *sigma*) (middle-right part) and a **decoder network** (bottom part). 
+
+The encoder performs downsampling operations on input cubes and the decoder upsamples them in order to regain the original shape. The variational layer attempts to learn the distribution of the dataset, this one can later be used for generation. 
 
 ![plot](./images/model_architecture/CVAE_2D.png)
 
-We have taken as a baseline architecture the one proposed in [2] and the hyper-parameters from [3]. The encoder and decoder of the CVAE have 4 symmetrical convolutional hidden layers. Each layer of the encoder has twice the number of convolutional filters as its predecesor, this is in order to learn more complex flow features. Encoder/decoder are composed of 32, 64, 128 and 256 convolutional filters. The dense layer at the end of the encoder is used commonly to combine all the feature maps from the last hidden layer. After that, there is a variational layer that similar to VRAEs, computes the parameters of the posterior distribution and from here we compute latent vectors
-using the re-parametrization trick, in this case it is `8 × 8 x 8` latent cubes. The decoder takes the latent vectors and performs the same number of operations using transposed convolutions in an upsampling
-manner in order to recover (reconstruct) into the original dimensions. The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space (which is modeled by the variational layer).
+
+First, the encoder and decoder are composed of four 3D convolutional layers, respectively. Each layer of the encoder (decoder) has twice (half) the number of convolutional filters as its predecesor, this is in order to learn more complex flow features. Each layer in the encoder is composed of 32, 64, 128 and 256 convolutional filters, similarly, each layer in the decoder is composed of 256, 128, 64, 32 convolutional filters.
+
+Secondly, the dense layer is used to combine all the feature maps obtained from the last encoder layer, this layer is connected to the variational layer that computes the parameters of the posterior data distribution, this is used to compute latent vectors using the re-parametrization trick [1], in this case, the latent dimensions correspond to `8 × 8 x 8` cubes. 
+
+Finally, the decoder takes the latent vectors and transposed convolutions to recover (reconstruct) the original cube data dimensions. 
+
+The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space (which is modeled by the variational layer).
+
+We have taken as a baseline architecture the one proposed in [2] and the hyper-parameters from [3]. 
 
 The script below shows an example in pytorch where an encoder and a decoder are defined using 3D convolutional layers.
 
@@ -308,3 +319,4 @@ For further reading, refer to this report that I wrote ([Generative Models for t
 * [1] [Diederik P Kingma, Max Welling. Auto-Encoding Variational Bayes. December 2013](https://arxiv.org/abs/1312.6114)
 * [2] [Victor Xing. Exploration of the ability of Deep Learning tolearn the characteristics of turbulent flows. November 2018.](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf)
 * [3] [Irina Higgins, et. al. Learning basic visual concepts with a constrained variational framework. International Conference on Learning Representations (ICLR), 2017.](https://openreview.net/forum?id=Sy2fzU9gl)
+* [4] [Generative Models for the Analysis of Dynamical Systems with Applications]()
