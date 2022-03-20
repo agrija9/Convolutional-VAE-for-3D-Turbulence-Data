@@ -135,7 +135,7 @@ The encoder performs downsampling operations on input cubes and the decoder upsa
 
 The encoder network is composed of **four** 3D convolutional layers, each layer has twice the number of convolutional filters as the previous one (32, 64, 128 and 256, respectively), this allows the model to learn more complex flow features. 
 
-The  dense layer is used to combine all the feature maps obtained from the last encoder layer, this layer is connected to the variational layer that computes the parameters of the posterior flow data distribution (*mu* and *sigma*, these parameters define a probability distribution using the re-parametrization trick described in [1]. This probability distribution allows us to sample from it in order to generate synthetic 3D cubes of dimensions  `8 × 8 x 8` (we set the latent dimension to 8). 
+The  dense layer is used to combine all the feature maps obtained from the last encoder layer, this layer is connected to the variational layer that computes the parameters of the posterior flow data distribution (*mu* and *sigma*, these parameters define a probability distribution using the re-parametrization trick described in [1]. This probability distribution allows us to sample from it in order to generate synthetic 3D cubes of dimensions  `8 × 8 x 8`.
 
 The decoder network takes latent vectors and applies **four** 3D transposed convolutional layers to recover (reconstruct) the original data dimensions, each layer has half the number of convolutional filters as the previous one (256, 128, 64, and 32, respectively).
 
@@ -228,7 +228,7 @@ The following are some hyperparameters that can be modified to train the model
 * ```--h_dim``` dimensions of hidden dense layer (connected to variational layer)
 * ```--z_dim``` latent space dimensions
 
-The main.py script calls the CVAE model and trains it on the 3D CFD data. It takes about 2 hours to train for 100 epochs using an **NVIDIA Tesla V100 GPU**. In this case, the model was trained for 170 epochs.
+The ``main.py`` script calls the model and trains it on the 3D CFD data. It takes about 2 hours to train for 100 epochs using an **NVIDIA Tesla V100 GPU**. In this case, the model was trained for 170 epochs.
 
 Note that when training 3DConvs models, the number of learning parameters increases exponentially when compared to 2DConvs models, due to this reason, training time is considerably longer for 3D data. 
 
