@@ -217,11 +217,9 @@ self.decoder = nn.Sequential(
 To train the model, open a terminal, activate your pip/conda environment and type:
 
 ```
-cd ./3D-CFD-Processing-CVAE
-python main.py --test_every_epochs 3 --batch_size 32 --epochs 5 --h_dim 128 --z_dim 64
+cd /path-to-repo/3D-CFD-Processing-CVAE
+python main.py --test_every_epochs 3 --batch_size 32 --epochs 40 --h_dim 128 --z_dim 64
 ```
-
-Note that when training 3DConvs models, the number of learning parameters increases exponentially in contrast to 2DConvs models, due to this reason, training time is considerably longer for 3D data.
 
 The following are some hyperparameters that can be modified to train the model
 
@@ -229,6 +227,10 @@ The following are some hyperparameters that can be modified to train the model
 * ```--epochs``` number of training epochs
 * ```--h_dim``` dimensions of hidden dense layer (connected to variational layer)
 * ```--z_dim``` latent space dimensions
+
+The main.py script calls the CVAE model and trains it on the 3D CFD data. It takes about 2 hours to train for 100 epochs using an **NVIDIA Tesla V100 GPU**. In this case, the model was trained for 170 epochs.
+
+Note that when training 3DConvs models, the number of learning parameters increases exponentially when compared to 2DConvs models, due to this reason, training time is considerably longer for 3D data. 
 
 ## (Optional) Model Training in a Cluster
 
