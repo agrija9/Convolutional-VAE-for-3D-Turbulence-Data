@@ -133,17 +133,17 @@ The encoder performs downsampling operations on input cubes and the decoder upsa
 ![plot](./images/model_architecture/CVAE_2D.png)
 
 
-First, the encoder and decoder are composed of four 3D convolutional layers, respectively. Each layer of the encoder (decoder) has twice (half) the number of convolutional filters as its predecesor, this is in order to learn more complex flow features. Each layer in the encoder is composed of 32, 64, 128 and 256 convolutional filters, similarly, each layer in the decoder is composed of 256, 128, 64, 32 convolutional filters.
+The encoder network is composed of **four** 3D convolutional layers, each layer has twice the number of convolutional filters as the previous one (32, 64, 128 and 256, respectively), this allows the model to learn more complex flow features. 
 
-Secondly, the dense layer is used to combine all the feature maps obtained from the last encoder layer, this layer is connected to the variational layer that computes the parameters of the posterior data distribution, this is used to compute latent vectors using the re-parametrization trick [1], in this case, the latent dimensions correspond to `8 × 8 x 8` cubes. 
+The  dense layer is used to combine all the feature maps obtained from the last encoder layer, this layer is connected to the variational layer that computes the parameters of the posterior flow data distribution (*mu* and *sigma*, these parameters define a probability distribution using the re-parametrization trick described in [1]. This probability distribution allows us to sample from it in order to generate synthetic 3D cubes of dimensions  `8 × 8 x 8` (we set the latent dimension to 8). 
 
-Finally, the decoder takes the latent vectors and transposed convolutions to recover (reconstruct) the original cube data dimensions. 
+The decoder network takes latent vectors and applies **four** 3D transposed convolutional layers to recover (reconstruct) the original data dimensions, each layer has half the number of convolutional filters as the previous one (256, 128, 64, and 32, respectively).
 
-The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space (which is modeled by the variational layer).
+The CVAE is trained with two loss functions: **Mean Squared Error (MSE)** for reconstructions and **Kullback-Leibler Divergence (KLB)** for regularization of the latent space.
 
-We have taken as a baseline architecture the one proposed in [2] and the hyper-parameters from [3]. 
+We have taken as baseline architecture the one proposed in [2] and the hyper-parameters from [3]. 
 
-The script below shows an example in pytorch where an encoder and a decoder are defined using 3D convolutional layers.
+The script below shows an example in pytorch where both encoder and a decoder are defined using 3D convolutional layers (Conv3d):
 
 
 ```python
