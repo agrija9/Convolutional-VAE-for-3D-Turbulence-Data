@@ -314,25 +314,24 @@ Once the model is trained, a straightforward generation approach is to initializ
 
 Qualitatively, one can inspect the generation of CFD cubes by evaluating the velocity fields for each component. As future work, more sophisticated random cube initialization has to be explored together with approapriate generation quality metrics.
 
-## Conclusions
+## Conclusions and Observations
 
 * For reconstruction loss, Mean Squared Error (MSE) has proven to be better than Binary-Cross-Entropy (BCE) (see ```loss.py```)
 * In order to equalize the orders of magnitues between MSE and Kulback-Leibler Divergence (KLD), we have multiplied the MSE by a factor of 0.1 (see ```loss.py```)
-* Due to the size of the 3D cubes, it is appropriate to use batches of 8 or 16. It can be that greater batches cause a memory overload
+* Due to the size of the 3D cubes, it is appropriate to use batches of 8 or 16. Bigger batches can cause a memory overload
 * We have added an extra 3DConv layer to the encoder and decoder of our model in order to improve reconstructions (see ```models.py```)
-* We have trained the model for up to 355 epochs, further improvement can be done because the loss values keep decreasing (adivsed to train for up to 1000 epochs)
-* In data pre-processing, we have found useful to do standarization and minmax scaling prior to feed cubes into the model
+* We have trained the model for up to 355 epochs, further improvement can be done because the loss values keep decreasing
+* In data pre-processing, we have found useful to do standarization and minmax scaling prior to feeding cubes into the model
 * The latent dimensions (z_dim) can still be modified, we have trained with 34, 90 and 128 latent vectors and noticed no major changes 
- 
-For further reading, refer to this report that I wrote ([Generative Models for the Analysis of Dynamical Systems with Applications](./alan_report/PreciadoA-RnDReport.pdf)).
+* For further reading, refer to the report that I wrote in [4] 
 
 ## Future Work
 
 * Investigate clustering (in lower dimensions) of cubes: is there clustering between cubes from walls versus cubes from the middle?
 * The next tasks will consist on exploring the generation capacities of the CVAE
 * Add a method for cube generation: which approach for random initialization of cubes is ok to start with?
-* Investigate 4D CNNs for temporal component
-* Explore the effect of cube size: current size 21x21x21 but 3D Convolutions can take any cube size
+* Investigate 4D CNNs for temporal component: 4D CNNs
+* Explore the effect of cube size: current input size is 21x21x21 but this can increase
 * Explore a custom loss function: can we insert more physics into the loss function?
 
 ## References
@@ -340,4 +339,4 @@ For further reading, refer to this report that I wrote ([Generative Models for t
 * [1] [Diederik P Kingma, Max Welling. Auto-Encoding Variational Bayes. December 2013](https://arxiv.org/abs/1312.6114)
 * [2] [Victor Xing. Exploration of the ability of Deep Learning tolearn the characteristics of turbulent flows. November 2018.](https://cerfacs.fr/wp-content/uploads/2018/11/CFD_RAPSTAGE2018_XING.pdf)
 * [3] [Irina Higgins, et. al. Learning basic visual concepts with a constrained variational framework. International Conference on Learning Representations (ICLR), 2017.](https://openreview.net/forum?id=Sy2fzU9gl)
-* [4] [Generative Models for the Analysis of Dynamical Systems with Applications]()
+* [4] [Generative Models for the Analysis of Dynamical Systems with Applications](https://pub.h-brs.de/frontdoor/index/index/docId/6041)
