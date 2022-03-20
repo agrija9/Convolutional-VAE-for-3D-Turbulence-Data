@@ -287,11 +287,14 @@ srun -p gpu -n 1  --gres gpu:v100:2 --cpus-per-task=1 --mem-per-cpu=32gb --pty /
 
 ## Model Outputs
 
-After training the model, a file with the model parameters is generated ```checkpoint.pkl```.
+After training the pytorch model, a file with the trained weights is generated ```checkpoint.pkl```.
 
-Also, a set of images comparing reconstructions with original cubes are generated (every n-th epochs) together with loss plots which can be visualized using tensorboard
+During the training, the model is evaluated on test data every n-th epochs, the scripts compare reconstructed versus original cubes and saves them as images. Also, loss values are logged and placed in a ```runs``` folder, the loss curves can be visualized using tensorboard by typing the following:
 
-```tensorboard --logdir=runs/```
+```
+cd /path-to-repo/3D-CFD-Processing-CVAE
+tensorboard --logdir=runs/
+```
 
 The folder ```runs/``` is generated automatically if it has not been created.
 
