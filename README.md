@@ -28,6 +28,8 @@ In total, the dataset consists of 96 simulations each with 100 time steps, this 
 
 ![plot](./images/cube_sample/3d_turbulence_cube_channels.png)
 
+**NOTE:** Due to confidentiality issues, we are not making our data public, you can use the scripts and adapt them to your own 3D data.
+
 ## Data Pre-processing
 
 The script below shows the custom pytorch dataloader written to preprocess 3D data. Here are some highlights:
