@@ -1,4 +1,4 @@
-# 3D-CFD-Processing-CVAE
+# Convolutional-VAE-for-3D-Turbulence-Data
 
 A Convolutional Variational Autoencoder (CVAE) for 3D CFD data reconstruction and generation.
 
