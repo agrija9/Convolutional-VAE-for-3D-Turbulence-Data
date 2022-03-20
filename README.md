@@ -188,7 +188,14 @@ self.decoder = nn.Sequential(
 
 ## Setting up the environment
 
+1) Clone this repository:
+
+    ```
+    git clone git@github.com:agrija9/3D-CFD-Processing-CVAE.git
+    ```
+
 1) It is recommended to use a virtual environment to run this project:
+
     * You can [install Anaconda](https://www.digitalocean.com/community/tutorials/how-to-install-anaconda-on-ubuntu-18-04-quickstart) and create an environment in your system
     * You can use pip venv to create an environment
 
@@ -207,26 +214,25 @@ self.decoder = nn.Sequential(
 
 ## Model Training
 
-Given the 3DConvs, the number of learning parameters increases exponentially in contrast to the 2DConvs, due to this reason, the training is considerably slower.
-
-
-The ```main.py``` script calls the CVAE model and trains it on the 3D CFD data. It takes about 2 hours to train for 100 epochs using an NVIDIA Tesla V100 GPU. 
-
-To run this model, open a terminal, activate your conda environment and type
+To train the model, open a terminal, activate your pip/conda environment and type:
 
 ```
+cd ./3D-CFD-Processing-CVAE
 python main.py --test_every_epochs 3 --batch_size 32 --epochs 5 --h_dim 128 --z_dim 64
 ```
 
+Note that when training 3DConvs models, the number of learning parameters increases exponentially in contrast to 2DConvs models, due to this reason, training time is considerably longer for 3D data.
+
 The following are some hyperparameters that can be modified to train the model
 
-* ```--batch_size``` number of cube samples to accomodate per batch
+* ```--batch_size``` number of cubes to process per patch
 * ```--epochs``` number of training epochs
-* ```--z_dim``` latent space dimension
+* ```--h_dim``` dimensions of hidden dense layer (connected to variational layer)
+* ```--z_dim``` latent space dimensions
 
-## Training
+## (Optional) Model Training in a Cluster
 
-In order to train this model in the cluster, transfer the code, data and also the following bash script (```run_CVAE.sh```)
+In order to train this model in a cluster, transfer the code, data and also the following bash script (```run_CVAE.sh```)
 
 ```bash
 #!/bin/bash
