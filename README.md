@@ -300,7 +300,11 @@ The folder ```runs/``` is generated automatically if it has not been created.
 
 ## 3D Reconstruction Results
 
-The figure below depicts the reconstruction improvement of a sample cube as a function of epochs. On top, there is the original cube (with corresponding velocity channels) and at the bottom, there is the corresponding reconstruction. For this example, we show reconstructions from 0 to 355 epochs with intervals of 15 epochs. Note the improvements in reconstructions as a function of epochs.
+In the figure below we show the reconstruction results of the same cube sample every *n* epochs. 
+
+The top row contains the original cube samples (for each velocity channel). The bottom row contains the reconstruction outputs every *n* epochs. 
+
+For this example, we show reconstructions from 0 to 355 epochs with intervals of 15 epochs. Note the improvements in reconstructions as a function of epochs.
 
 ![plot](./images/reconstructions/batch_idx_1/animation_1.gif)
 
