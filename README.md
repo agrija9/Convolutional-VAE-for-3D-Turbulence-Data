@@ -234,38 +234,40 @@ Note that when training 3DConvs models, the number of learning parameters increa
 
 ## (Optional) Model Training in a Cluster
 
-In order to train this model in a cluster, transfer the code, data and also the following bash script (```run_CVAE.sh```)
+In order to train this model in a cluster, transfer data, scripts and install the dependencies in an environment in the cluster.
+
+The ```run_CVAE.sh``` contains the following:
 
 ```bash
 #!/bin/bash
 #
-#SBATCH --job-name=ice_detection_vrae
-#SBATCH -o ./output_jobs/slurm.%x_10_factor_1_epochs_64_batch_2020-06-03.%j.out # STDOUT
-#SBATCH -e ./output_jobs/slurm.%x_10_factor_1_epochs_64_batch_2020-06-03.%j.err #STDERR
+#SBATCH --job-name=3D_data_CVAE
+#SBATCH -o ./output_jobs/slurm.%j.out # STDOUT
+#SBATCH -e ./output_jobs/slurm.%j.err #STDERR
 #SBATCH --nodes=1
 #SBATCH --ntasks=16
 #SBATCH --time=20:00:00
 
 # insert variables with sed before calling
-date=2020-20-05_16:40
+date=2022-20-03_16:43
 
 echo DATE and TIME $date
 
 # set hyperparameters
 batch_size=128
-epochs=100
-latent_length=32
+epochs=170
+latent_length=64
 
 # set model name and create the output directory
 model_name=cvae_epochs_${epochs}_batch_size_${batch_size}_latent_size_${latent_length}_${date}
 model_name_base=cvae
 output=${model_name}_$date
-mkdir -p /home/apreciadogrijalva/alan_cluster/Air_ducts/output_jobs/$model_name_base
+mkdir -p /home/output_jobs/$model_name_base
 
 # load module (custom anaconda environment)
 module load Anaconda3/5.1.0
-source /home/apreciadogrijalva/.bashrc
-conda activate /home/apreciadogrijalva/alan-env
+source /home/.bashrc
+conda activate /home/conda-env
 echo Modules loaded....
 
 # print model/train info
@@ -275,11 +277,10 @@ echo Training model for $epochs iterations
 echo Calculate on $cores Cores
 
 # run python script
-CUDA_VISIBLE_DEVICES=6,7 /home/apreciadogrijalva/alan-env/bin/python /home/apreciadogrijalva/alan_cluster/Air_ducts/main.py --batch_size $batch_size --epochs $epochs --z_dim $latent_length
+CUDA_VISIBLE_DEVICES=6,7 /home/conda-env/bin/python /home/main.py --batch_size $batch_size --epochs $epochs --z_dim $latent_length
 ```
 
-The above bash script can be run in the GPU node of the cluster with the following command
-
+The above bash script can be run in the GPU node of a SLURM cluster with the following command:
 ```
 srun -p gpu -n 1  --gres gpu:v100:2 --cpus-per-task=1 --mem-per-cpu=32gb --pty /bin/bash run_CVAE.sh
 ```
