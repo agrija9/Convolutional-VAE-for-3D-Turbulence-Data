@@ -193,7 +193,7 @@ self.decoder = nn.Sequential(
 1) Clone this repository:
 
     ```
-    git clone git@github.com:agrija9/3D-CFD-Processing-CVAE.git
+    git clone git@github.com:agrija9/Convolutional-VAE-for-3D-Turbulence-Data
     ```
 
 1) It is recommended to use a virtual environment to run this project:
@@ -219,7 +219,7 @@ self.decoder = nn.Sequential(
 To train the model, open a terminal, activate your pip/conda environment and type:
 
 ```
-cd /path-to-repo/3D-CFD-Processing-CVAE
+cd /path-to-repo/Convolutional-VAE-for-3D-Turbulence-Data
 python main.py --test_every_epochs 3 --batch_size 32 --epochs 40 --h_dim 128 --z_dim 64
 ```
 
